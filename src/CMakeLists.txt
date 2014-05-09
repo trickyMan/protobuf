@@ -295,7 +295,6 @@ IF(NOT CMAKE_CROSSCOMPILING)
                          OUTPUT_NAME     protoc)
    target_link_libraries(protoc_compiler
                          ${THREAD_LINK_LIB})
-   get_target_property(protoc_compiler_location protoc_compiler LOCATION)
 ENDIF(NOT CMAKE_CROSSCOMPILING)
 
 IF(NOT CMAKE_CROSSCOMPILING)
