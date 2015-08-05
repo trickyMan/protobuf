@@ -169,9 +169,9 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake.in
                ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
 # Include directories for this project
-if (ZLIB_FOUND)
+if (PROTOBUF_USE_ZLIB)
   include_directories(${ZLIB_INCLUDE_DIRS})
-endif ()
+endif()
 include_directories(
  ${CMAKE_CURRENT_BINARY_DIR}
  ${CMAKE_CURRENT_SOURCE_DIR}
@@ -212,15 +212,15 @@ set(LIBPROTOBUF_SOURCES
  google/protobuf/io/zero_copy_stream_impl.cc
  google/protobuf/compiler/importer.cc
  google/protobuf/compiler/parser.cc)
-if (ZLIB_FOUND)
-  # Keeping the ZLIB dependent source file separate makes it possible to build
-  # protoc executable without any zlib dependecies. Any extra depedencies on
-  # protoc executable make it complicated to use the executable during build
-  # steps for projects such as ParaView since they require the environment to
-  # be set up correctly hence we avoid as such dependencies on protoc at all
-  # costs!!!
-  set (LIBPROTOBUF_SOURCES_EXTRA
-        google/protobuf/io/gzip_stream.cc)
+if (PROTOBUF_USE_ZLIB)
+    # Keeping the ZLIB dependent source file separate makes it possible to build
+    # protoc executable without any zlib dependecies. Any extra depedencies on
+    # protoc executable make it complicated to use the executable during build
+    # steps for projects such as ParaView since they require the environment to
+    # be set up correctly hence we avoid as such dependencies on protoc at all
+    # costs!!!
+    set (LIBPROTOBUF_SOURCES_EXTRA
+      google/protobuf/io/gzip_stream.cc)
 endif()
 add_library(protobuf ${LIBPROTOBUF_SOURCES} ${LIBPROTOBUF_SOURCES_EXTRA})
 if (WIN32 AND BUILD_SHARED_LIBS)
