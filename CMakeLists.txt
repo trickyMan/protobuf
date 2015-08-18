@@ -80,12 +80,16 @@ if (Threads_FOUND)
 endif ()
 
 # Enable classes using zlib compression
-find_package(ZLIB)
-set(ZLIB_LINK_LIB "")
-if (ZLIB_FOUND)
- set(HAVE_ZLIB 1)
- set(ZLIB_LINK_LIB ${ZLIB_LIBRARIES})
-endif (ZLIB_FOUND)
+set(PROTOBUF_USE_ZLIB 0)
+if (PROTOBUF_ENABLE_ZLIB)
+  find_package(ZLIB)
+  set(ZLIB_LINK_LIB "")
+  if (ZLIB_FOUND)
+    set(HAVE_ZLIB 1)
+    set(ZLIB_LINK_LIB ${ZLIB_LIBRARIES})
+    set(PROTOBUF_USE_ZLIB 1)
+  endif (ZLIB_FOUND)
+endif()
 
 # Source code for protobuf and its test cases
 add_subdirectory(src)
